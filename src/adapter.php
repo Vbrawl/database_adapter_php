@@ -78,6 +78,16 @@ namespace DATABASE_ADAPTER {
         public function query($query);
 
         /**
+         * Insert or Update a into a database.
+         *
+         * @param string $insert_statement
+         * @param string $update_statement
+         * @param string $params
+         * @return boolean
+         */
+        public function upsert($insert_statement, $update_statement, $params);
+
+        /**
          * Close the database connection.
          *
          * @return void

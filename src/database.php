@@ -76,6 +76,12 @@ namespace DATABASE_ADAPTER {
                 return false;
             }
 
+            function upsert($insert_statement, $update_statement, $params) {
+                $executed = $this->execPrepared($update_statement, $params);
+                if(!$executed) $executed = $this->execPrepared($insert_statement, $params);
+                return $executed;
+            }
+
             function close() {
                 if($this->db != null) {
                     $this->db->close();
