@@ -23,10 +23,16 @@ namespace DATABASE_ADAPTER {
                 $this->filepath = $filepath;
                 $this->encryption = $encryption;
             }
+
+            private function init_db() {
+                $this->db->exec('PRAGMA case_sensitive_like = true');
+            }
             
             function connect() {
-                if($this->db == null)
+                if($this->db == null) {
                     $this->db = new \SQLite3($this->filepath, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE, $this->encryption);
+                    $this->init_db();
+                }
             }
 
             function isConnected() {
