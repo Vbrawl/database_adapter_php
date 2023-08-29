@@ -77,8 +77,8 @@ namespace DATABASE_ADAPTER {
             }
 
             function upsert($insert_statement, $update_statement, $params) {
-                $executed = $this->execPrepared($update_statement, $params);
-                if(!$executed) $executed = $this->execPrepared($insert_statement, $params);
+                $executed = $this->execPrepared($insert_statement, $params);
+                if(!$executed) $executed = $this->execPrepared($update_statement, $params);
                 return $executed;
             }
 
