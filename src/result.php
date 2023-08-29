@@ -10,17 +10,17 @@ namespace DATABASE_ADAPTER {
 
         class SQLITE3Result implements RESULTAdapter {
 
-            private $res = null;
+            private ?\SQLite3Result $res = null;
 
-            public function __construct($results) {
+            public function __construct(\SQLite3Result $results) {
                 $this->res = $results;
             }
 
-            public function getRowA() {
+            public function getRowA() : array | false {
                 return $this->res->fetchArray(SQLITE3_ASSOC);
             }
 
-            public function getRowI() {
+            public function getRowI() : array | false {
                 return $this->res->fetchArray(SQLITE3_NUM);
             }
 

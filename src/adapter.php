@@ -10,21 +10,21 @@ namespace DATABASE_ADAPTER {
          *
          * @return void
          */
-        public function connect();
+        public function connect() : void;
 
         /**
          * Check if the database connection is active.
          *
          * @return boolean
          */
-        public function isConnected();
+        public function isConnected() : bool;
 
         /**
          * Get the last inserted ID.
          *
          * @return integer
          */
-        public function lastInsertRowId();
+        public function lastInsertRowId() : int;
 
         /**
          * Prepare a query with the given parameters.
@@ -37,7 +37,7 @@ namespace DATABASE_ADAPTER {
          * @param array $params
          * @return string
          */
-        public function prepare($query, $args);
+        public function prepare(string $query, array $args) : string;
 
         /**
          * Prepare a query and execute it.
@@ -48,7 +48,7 @@ namespace DATABASE_ADAPTER {
          * @param array $params
          * @return boolean
          */
-        public function execPrepared($query, $args);
+        public function execPrepared(string $query, array $args) : bool;
 
         /**
          * Execute an SQL query/statement.
@@ -56,7 +56,7 @@ namespace DATABASE_ADAPTER {
          * @param string $query
          * @return boolean
          */
-        public function exec($query);
+        public function exec(string $query) : bool;
 
         /**
          * Prepare a query and execute it, return the results.
@@ -67,7 +67,7 @@ namespace DATABASE_ADAPTER {
          * @param array $params
          * @return RESULTAdapter
          */
-        public function queryPrepared($query, $args);
+        public function queryPrepared(string $query, array $args) : RESULTAdapter;
 
         /**
          * Execute an SQL Query and return the results.
@@ -75,7 +75,7 @@ namespace DATABASE_ADAPTER {
          * @param string $query
          * @return RESULTAdapter
          */
-        public function query($query);
+        public function query(string $query) : RESULTAdapter;
 
         /**
          * Insert or Update a into a database.
@@ -85,14 +85,14 @@ namespace DATABASE_ADAPTER {
          * @param string $params
          * @return boolean
          */
-        public function upsert($insert_statement, $update_statement, $params);
+        public function upsert(string $insert_statement, string $update_statement, array $params) : bool;
 
         /**
          * Close the database connection.
          *
          * @return void
          */
-        public function close();
+        public function close() : void;
 
     }
 
@@ -103,14 +103,14 @@ namespace DATABASE_ADAPTER {
          *
          * @return array
          */
-        public function getRowA(); // Associatively
+        public function getRowA() : array | false; // Associatively
 
         /**
          * Get a result row with numbers as indexes.
          *
          * @return array
          */
-        public function getRowI(); // By index
+        public function getRowI() : array | false; // By index
 
     }
 

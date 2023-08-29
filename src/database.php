@@ -9,9 +9,9 @@ namespace DATABASE_ADAPTER {
 
         class SQLITE3Database implements DBAdapter {
 
-            private $filepath = ":memory:";
-            private $encryption = "";
-            private $db = null;
+            private string $filepath = ":memory:";
+            private string $encryption = "";
+            private ?\SQLite3 $db = null;
 
             /**
              * Initialize a database adapter to work with SQLITE3
@@ -19,31 +19,31 @@ namespace DATABASE_ADAPTER {
              * @param string $filepath
              * @param string $encryption
              */
-            function __construct($filepath = ":memory:", $encryption = "") {
+            function __construct(string $filepath = ":memory:", string $encryption = "") {
                 $this->filepath = $filepath;
                 $this->encryption = $encryption;
             }
 
-            private function init_db() {
+            private function init_db() : void {
                 $this->db->exec('PRAGMA case_sensitive_like = true');
             }
             
-            function connect() {
+            function connect() : void {
                 if($this->db == null) {
                     $this->db = new \SQLite3($this->filepath, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE, $this->encryption);
                     $this->init_db();
                 }
             }
 
-            function isConnected() {
+            function isConnected() : bool {
                 return !!$this->db;
             }
 
-            function lastInsertRowId() {
+            function lastInsertRowId() : int {
                 return $this->db->lastInsertRowId();
             }
 
-            function prepare($query, $params) {
+            function prepare(string $query, array $params) : string {
                 if($this->db != null) {
                     $stmt = $this->db->prepare($query);
                     foreach($params as $param => $value) {
@@ -53,22 +53,22 @@ namespace DATABASE_ADAPTER {
                 }
             }
 
-            function execPrepared($query, $params) {
+            function execPrepared(string $query, array $params) : bool {
                 return $this->exec($this->prepare($query, $params));
             }
 
-            function exec($query) {
+            function exec(string $query) : bool {
                 if($this->db != null) {
                     return $this->db->exec($query);
                 }
                 return false;
             }
 
-            function queryPrepared($query, $params) {
+            function queryPrepared(string $query, array $params) : ?SQLITE3Result {
                 return $this->query($this->prepare($query, $params));
             }
 
-            function query($query) {
+            function query(string $query) : ?SQLITE3Result {
                 $res = $this->db->query($query);
                 if($res !== false) {
                     return new SQLITE3Result($res);
@@ -76,13 +76,13 @@ namespace DATABASE_ADAPTER {
                 return false;
             }
 
-            function upsert($insert_statement, $update_statement, $params) {
+            function upsert(string $insert_statement, string $update_statement, array $params) : bool {
                 $executed = $this->execPrepared($insert_statement, $params);
                 if(!$executed) $executed = $this->execPrepared($update_statement, $params);
                 return $executed;
             }
 
-            function close() {
+            function close() : void {
                 if($this->db != null) {
                     $this->db->close();
                     $this->db = null;
