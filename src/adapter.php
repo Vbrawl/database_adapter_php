@@ -67,7 +67,7 @@ namespace DATABASE_ADAPTER {
          * @param array $params
          * @return RESULTAdapter
          */
-        public function queryPrepared(string $query, array $args) : RESULTAdapter;
+        public function queryPrepared(string $query, array $args) : ?RESULTAdapter;
 
         /**
          * Execute an SQL Query and return the results.
@@ -75,7 +75,7 @@ namespace DATABASE_ADAPTER {
          * @param string $query
          * @return RESULTAdapter
          */
-        public function query(string $query) : RESULTAdapter;
+        public function query(string $query) : ?RESULTAdapter;
 
         /**
          * Insert or Update a into a database.

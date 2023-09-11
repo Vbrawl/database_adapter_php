@@ -1,6 +1,6 @@
 {
     "project_name": "database_adapter",
-    "project_version": "1.0.0",
+    "project_version": "1.0.1",
     "project_url": "https://github.com/vbrawl/database_adapter_php",
     "project_requirements": {},
     "project_library_directory": "pm_library",
